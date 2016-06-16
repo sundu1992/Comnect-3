@@ -7,14 +7,30 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
+    // 0 - O and 1-X
+    int activePlayer = 0;
+    int[] gameState = {2,2,2,2,2,2,2,2,2}; // 2 - unplayed
+
     public void dropIn(View view){
 
         ImageView counter = (ImageView)view;
 
         counter.setTranslationY(-1000f);
+        int Tapped = Integer.parseInt(counter.getTag().toString());
 
-        counter.setImageResource(R.drawable.o);
-        counter.animate().translationYBy(1000f).setDuration(300);
+        if(gameState[Tapped]==2) {
+
+            gameState[Tapped]=activePlayer;
+            if (activePlayer == 0) {
+
+                counter.setImageResource(R.drawable.o);
+                activePlayer = 1;
+            } else {
+                counter.setImageResource(R.drawable.x);
+                activePlayer = 0;
+            }
+            counter.animate().translationYBy(1000f).setDuration(300);
+        }
 
     }
 
