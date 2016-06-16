@@ -12,20 +12,22 @@ public class MainActivity extends AppCompatActivity {
 
     // 0 - O and 1-X
     int activePlayer = 0;
+    boolean active = true;
     int[] gameState = {2,2,2,2,2,2,2,2,2}; // 2 - unplayed
-    int [][] winningPosition = {{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,4,8},{1,5,8},{2,4,6}};
+    int [][] winningPosition = {{0,1,2},{3,4,5},{6,7,8},{0,3,6},{1,4,7},{2,5,8},{0,4,8},{2,4,6}};
 
     public void dropIn(View view){
 
         ImageView counter = (ImageView)view;
 
 
-        counter.setTranslationY(-1000f);
+
         int Tapped = Integer.parseInt(counter.getTag().toString());
 
-        if(gameState[Tapped]==2) {
+        if(gameState[Tapped]==2 && active) {
 
             gameState[Tapped]=activePlayer;
+            counter.setTranslationY(-1000f);
             if (activePlayer == 0) {
 
                 counter.setImageResource(R.drawable.o);
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
                         gameState[winPost[1]]== gameState[winPost[2]] &&
                         gameState[winPost[0]] != 2){
                     System.out.println(gameState[winPost[0]]);
+                    active = false;
                     String Winner="X";
                     if(gameState[winPost[0]]==0){
                         Winner = "O";
@@ -56,12 +59,27 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+        else{
+            boolean gameOver=true;
+            for(int countState:gameState){
+                if(countState==2)
+                    gameOver=false;
+            }
+            if(gameOver){
+                TextView msg = (TextView)findViewById(R.id.popUp);
+                msg.setText("Its a draw!!");
+                //when won
+                LinearLayout linearLayout = (LinearLayout)findViewById(R.id.linear);
+                linearLayout.setVisibility(View.VISIBLE);
+
+            }
+        }
 
     }
     public void playAgain(View view){
 
         activePlayer = 0;
-
+        active = true;
         for(int i=0; i< gameState.length; i++)
             gameState[i]=2;
         LinearLayout linearLayout = (LinearLayout)findViewById(R.id.linear);
