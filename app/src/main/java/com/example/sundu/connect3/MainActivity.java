@@ -3,6 +3,7 @@ package com.example.sundu.connect3;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -57,6 +58,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    public void playAgain(View view){
+
+        activePlayer = 0;
+
+        for(int i=0; i< gameState.length; i++)
+            gameState[i]=2;
+        LinearLayout linearLayout = (LinearLayout)findViewById(R.id.linear);
+        linearLayout.setVisibility(View.INVISIBLE);
+
+        GridLayout gridLayout = (GridLayout)findViewById(R.id.grid);
+        for(int i=0;i<gridLayout.getChildCount();i++){
+            ((ImageView)gridLayout.getChildAt(i)).setImageResource(0);
+        }
+
+
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
