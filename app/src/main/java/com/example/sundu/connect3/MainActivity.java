@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     public void dropIn(View view){
 
         ImageView counter = (ImageView)view;
+
 
         counter.setTranslationY(-1000f);
         int Tapped = Integer.parseInt(counter.getTag().toString());
@@ -30,13 +33,24 @@ public class MainActivity extends AppCompatActivity {
                 counter.setImageResource(R.drawable.x);
                 activePlayer = 0;
             }
-            counter.animate().translationYBy(1000f).setDuration(300);
+            counter.animate().translationYBy(1000f).setDuration(30);
             for(int[] winPost : winningPosition){
 
                 if(gameState[winPost[0]] == gameState[winPost[1]] &&
                         gameState[winPost[1]]== gameState[winPost[2]] &&
                         gameState[winPost[0]] != 2){
                     System.out.println(gameState[winPost[0]]);
+                    String Winner="X";
+                    if(gameState[winPost[0]]==0){
+                        Winner = "O";
+                    }
+
+                    //Who won?
+                    TextView msg = (TextView)findViewById(R.id.popUp);
+                    msg.setText(Winner+" Won!!");
+                    //when won
+                    LinearLayout linearLayout = (LinearLayout)findViewById(R.id.linear);
+                    linearLayout.setVisibility(View.VISIBLE);
 
                 }
             }
